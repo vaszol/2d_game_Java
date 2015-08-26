@@ -21,6 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static GameBack background;
     public static Player player;
     public static ArrayList<Bullet> bullets;
+    public static ArrayList<Enemy> enemies;
 
     //Constructor
     public GamePanel(){
@@ -44,19 +45,27 @@ public class GamePanel extends JPanel implements Runnable {
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB); //размеры и способ растрирования
         g = (Graphics2D) image.getGraphics(); //привяжем холст к кисти
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        String name = g.getClass().getName();
+//        System.out.println(name);
+//        sun.java2d.SunGraphics2D  клас который занимается графикой
+
 
         background = new GameBack();
         player = new Player();
         bullets = new ArrayList<Bullet>();
+        enemies = new ArrayList<Enemy>();
+        //TODO remove these enemies
+        enemies.add(new Enemy(1, 1)); //добавим врагов для теста
+        enemies.add(new Enemy(1, 1));
 
         while (true){// TODO States
-            long timer = System.nanoTime();
+//            long timer = System.nanoTime();
             gameUpdate();
             gameRender();
             gameDraw();
 
-            long elapsed = (System.nanoTime() - timer)/1000000;
-            System.out.println(elapsed);
+//            long elapsed = (System.nanoTime() - timer)/1000000;
+//            System.out.println(elapsed);
 
             try {
                 thread.sleep(20); //TODO FPS
@@ -82,7 +91,12 @@ public class GamePanel extends JPanel implements Runnable {
                 bullets.remove(i);
                 i--;
             }
-            System.out.println(bullets.size());
+//            System.out.println(bullets.size());
+        }
+
+        //Enemies uodate
+        for(int i=0; i < enemies.size(); i++){
+            enemies.get(i).update();
         }
     }
 
@@ -96,6 +110,11 @@ public class GamePanel extends JPanel implements Runnable {
         //Bullets draw
         for(int i=0; i < bullets.size(); i++){
             bullets.get(i).draw(g);
+        }
+
+        //Enemies draw
+        for(int i=0; i < enemies.size(); i++){
+            enemies.get(i).draw(g);
         }
     }
 
