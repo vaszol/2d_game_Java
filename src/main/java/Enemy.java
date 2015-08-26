@@ -34,6 +34,7 @@ public class Enemy {
                     r = 7;
 
                     speed = 2;
+                    health = 2;
 
                     double angle = Math.toRadians(Math.random()*360);
                     dx = Math.sin(angle)*speed;
@@ -44,7 +45,31 @@ public class Enemy {
     }
 
 
+
+
     //Functions
+
+
+    public double getX() {
+        return x;
+    }
+    public double getY() {
+        return y;
+    }
+    public int getR() {
+        return r;
+    }
+
+    public boolean remove(){
+        if(health <=0){
+            return true;
+        }
+        return false;
+    }
+
+    public void hit(){
+        health--;
+    }
 
     public void update(){
         x += dx;
@@ -62,7 +87,7 @@ public class Enemy {
         g.setStroke(new BasicStroke(3));
         g.setColor(color.darker());
         g.drawOval((int) x - r, (int) y - r, 2 * r, 2 * r);
-        g.setStroke(new BasicStroke(3));
+        g.setStroke(new BasicStroke(1));
 
     }
 }
