@@ -72,8 +72,9 @@ public class Player {
         }
 
         if (up && left || up && right || down && left || down && right){
-            dy = dy*Math.sin(45);
-            dx = dx*Math.cos(45);
+            double angle = Math.toRadians(45);
+            dy = dy*Math.sin(angle);
+            dx = dx*Math.cos(angle);
         }
 
         y += dy;

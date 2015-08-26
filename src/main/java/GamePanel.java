@@ -1,3 +1,5 @@
+import sun.rmi.runtime.Log;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -48,13 +50,16 @@ public class GamePanel extends JPanel implements Runnable {
         bullets = new ArrayList<Bullet>();
 
         while (true){// TODO States
-
+            long timer = System.nanoTime();
             gameUpdate();
             gameRender();
             gameDraw();
 
+            long elapsed = (System.nanoTime() - timer)/1000000;
+            System.out.println(elapsed);
+
             try {
-                thread.sleep(33); //TODO FPS
+                thread.sleep(20); //TODO FPS
             } catch (InterruptedException e) {
 
                 e.printStackTrace();
@@ -72,6 +77,12 @@ public class GamePanel extends JPanel implements Runnable {
         //Bullets update
         for(int i=0; i < bullets.size(); i++){
             bullets.get(i).update();
+            boolean remove = bullets.get(i).remove();
+            if(remove){
+                bullets.remove(i);
+                i--;
+            }
+            System.out.println(bullets.size());
         }
     }
 

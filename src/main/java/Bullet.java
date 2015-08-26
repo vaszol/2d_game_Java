@@ -34,6 +34,13 @@ public class Bullet  {
         g.fillOval((int) x,(int) y, r, 2*r);
     }
 
+    public boolean remove(){
+        if(y < 0){
+            return true;
+        }
+        return false;
+    }
+
 
 
 }
