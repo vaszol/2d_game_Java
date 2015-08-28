@@ -1,5 +1,3 @@
-import sun.rmi.runtime.Log;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -17,6 +15,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     private BufferedImage image; //холст
     private Graphics2D g; //кисточка
+
+    private int FPS;
+    private double millisToFPS;
+    private long timerFPS;
+    private int sleepTime;
 
     public static GameBack background;
     public static Player player;
@@ -42,6 +45,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void run() {
+        FPS = 30;
+        millisToFPS = 1000/FPS;
 
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB); //размеры и способ растрирования
         g = (Graphics2D) image.getGraphics(); //привяжем холст к кисти
@@ -58,20 +63,29 @@ public class GamePanel extends JPanel implements Runnable {
         wave = new Wave();
 
         while (true){// TODO States
+            timerFPS = System.nanoTime();
 //            long timer = System.nanoTime();
             gameUpdate();
             gameRender();
             gameDraw();
 
+            timerFPS = (System.nanoTime() - timerFPS)/1000000;
+            if(millisToFPS > timerFPS){
+                sleepTime = (int) (millisToFPS - timerFPS);
+            }else sleepTime = 1;
+
 //            long elapsed = (System.nanoTime() - timer)/1000000;
 //            System.out.println(elapsed);
 
             try {
-                thread.sleep(20); //TODO FPS
+                thread.sleep(sleepTime); //TODO FPS
+                System.out.println(sleepTime);
             } catch (InterruptedException e) {
 
                 e.printStackTrace();
             }
+            timerFPS = 0;
+            sleepTime = 1;
         }
     }
 
