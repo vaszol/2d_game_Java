@@ -14,7 +14,7 @@ public class Player {
     private double dy; //Move Coef
 
     private int speed;
-
+    private double health;
 
     private Color color1;
     private Color color2;
@@ -25,6 +25,7 @@ public class Player {
     public static boolean right;
 
     public static boolean isFiring;
+
 
     //Constructor
 
@@ -38,6 +39,7 @@ public class Player {
         dy = 0;
 
         speed = 5;
+        health = 5;
 
         color1 = Color.white;
 
@@ -58,6 +60,14 @@ public class Player {
 
     public double getY() {
         return y;
+    }
+
+    public int getR() {
+        return r;
+    }
+
+    public void hit(){
+        health--;
     }
 
     public void update(){
