@@ -30,7 +30,7 @@ public class Enemy {
                 switch (rank){
                 case (1):
                     x = Math.random() * GamePanel.WIDTH;
-                    x = 0;
+                    y = 0;
                     r = 7;
 
                     speed = 2;

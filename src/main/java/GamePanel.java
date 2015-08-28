@@ -22,6 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static Player player;
     public static ArrayList<Bullet> bullets;
     public static ArrayList<Enemy> enemies;
+    public static Wave wave;
 
     //Constructor
     public GamePanel(){
@@ -54,9 +55,7 @@ public class GamePanel extends JPanel implements Runnable {
         player = new Player();
         bullets = new ArrayList<Bullet>();
         enemies = new ArrayList<Enemy>();
-        //TODO remove these enemies
-        enemies.add(new Enemy(1, 1)); //добавим врагов для теста
-        enemies.add(new Enemy(1, 1));
+        wave = new Wave();
 
         while (true){// TODO States
 //            long timer = System.nanoTime();
@@ -146,7 +145,10 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
         }
+        wave.update();
     }
+
+
 
     public void gameRender(){
         //Background draw
@@ -163,6 +165,11 @@ public class GamePanel extends JPanel implements Runnable {
         //Enemies draw
         for(int i=0; i < enemies.size(); i++){
             enemies.get(i).draw(g);
+        }
+
+        //Wave draw
+        if(wave.showWave()){
+            wave.draw(g);
         }
     }
 
