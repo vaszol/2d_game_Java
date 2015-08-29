@@ -1,12 +1,11 @@
 import sun.security.krb5.internal.KRBError;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 /**
  * Created by vas on 26.08.2015.
  */
-public class Listners implements KeyListener {
+public class Listners implements KeyListener, MouseListener, MouseMotionListener {
 
 
 
@@ -50,5 +49,39 @@ public class Listners implements KeyListener {
 
     public void keyTyped(KeyEvent e) {
 
+    }
+
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    public void mousePressed(MouseEvent e) {
+        if (e.getButton() == MouseEvent.BUTTON1){
+            GamePanel.player.isFiring = true;
+        }
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        if (e.getButton() == MouseEvent.BUTTON1){
+            GamePanel.player.isFiring = false;
+        }
+    }
+
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    public void mouseDragged(MouseEvent e) {
+        GamePanel.mouseX = e.getX();
+        GamePanel.mouseY = e.getY();
+    }
+
+    public void mouseMoved(MouseEvent e) {
+        GamePanel.mouseX = e.getX();
+        GamePanel.mouseY = e.getY();
     }
 }

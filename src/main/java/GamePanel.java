@@ -8,8 +8,11 @@ import java.util.ArrayList;
  */
 public class GamePanel extends JPanel implements Runnable {
     //Field
-    public static int WIDTH = 400;
-    public static int HEIGHT = 400;
+    public static int WIDTH = 600;
+    public static int HEIGHT = 600;
+
+    public static int mouseX;
+    public static int mouseY;
 
     private Thread thread; //
 
@@ -21,11 +24,18 @@ public class GamePanel extends JPanel implements Runnable {
     private long timerFPS;
     private int sleepTime;
 
+    private enum STATES{
+        MENUE,
+        PLAY
+    }
+    private STATES states = STATES.MENUE;
+
     public static GameBack background;
     public static Player player;
     public static ArrayList<Bullet> bullets;
     public static ArrayList<Enemy> enemies;
     public static Wave wave;
+    public static Menue menue;
 
     //Constructor
     public GamePanel(){
@@ -35,6 +45,8 @@ public class GamePanel extends JPanel implements Runnable {
         requestFocus();
 
         addKeyListener(new Listners());
+        addMouseMotionListener(new Listners());
+        addMouseListener(new Listners());
     }
 
     //Functions
@@ -61,13 +73,25 @@ public class GamePanel extends JPanel implements Runnable {
         bullets = new ArrayList<Bullet>();
         enemies = new ArrayList<Enemy>();
         wave = new Wave();
+        menue = new Menue();
 
         while (true){// TODO States
-            timerFPS = System.nanoTime();
+            if(states.equals(STATES.MENUE)){
+                background.update();
+                background.draw(g);
+                menue.draw(g);
+                gameDraw();
+            }
+            if(states.equals(STATES.PLAY)){
+                gameUpdate();
+                gameRender();
+                gameDraw();
+            }
+
+
+//            timerFPS = System.nanoTime();
 //            long timer = System.nanoTime();
-            gameUpdate();
-            gameRender();
-            gameDraw();
+
 
             timerFPS = (System.nanoTime() - timerFPS)/1000000;
             if(millisToFPS > timerFPS){
