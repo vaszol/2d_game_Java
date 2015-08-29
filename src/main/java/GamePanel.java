@@ -95,7 +95,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
 
-//            timerFPS = System.nanoTime();
+            timerFPS = System.nanoTime();
 //            long timer = System.nanoTime();
 
 
