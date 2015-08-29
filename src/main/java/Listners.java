@@ -26,6 +26,9 @@ public class Listners implements KeyListener, MouseListener, MouseMotionListener
         if (key== KeyEvent.VK_SPACE){
             Player.isFiring = true;
         }
+        if (key== KeyEvent.VK_ESCAPE){
+            GamePanel.state = GamePanel.STATES.MENUE;
+        }
     }
 
     public void keyReleased(KeyEvent e) {
@@ -58,12 +61,14 @@ public class Listners implements KeyListener, MouseListener, MouseMotionListener
     public void mousePressed(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1){
             GamePanel.player.isFiring = true;
+            GamePanel.LeftMouse = true;
         }
     }
 
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1){
             GamePanel.player.isFiring = false;
+            GamePanel.LeftMouse = false;
         }
     }
 

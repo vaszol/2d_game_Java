@@ -13,6 +13,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public static int mouseX;
     public static int mouseY;
+    public static boolean LeftMouse;
 
     private Thread thread; //
 
@@ -24,11 +25,11 @@ public class GamePanel extends JPanel implements Runnable {
     private long timerFPS;
     private int sleepTime;
 
-    private enum STATES{
+    public static enum STATES{
         MENUE,
         PLAY
     }
-    private STATES states = STATES.MENUE;
+    public static STATES state = STATES.MENUE;
 
     public static GameBack background;
     public static Player player;
@@ -59,11 +60,15 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         FPS = 30;
         millisToFPS = 1000/FPS;
+        sleepTime = 0;
 
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB); //размеры и способ растрирования
         g = (Graphics2D) image.getGraphics(); //привяжем холст к кисти
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        String name = g.getClass().getName();
+
+        LeftMouse = false;
+
+//        String name = g.getClass().getName();
 //        System.out.println(name);
 //        sun.java2d.SunGraphics2D  клас который занимается графикой
 
@@ -76,13 +81,14 @@ public class GamePanel extends JPanel implements Runnable {
         menue = new Menue();
 
         while (true){// TODO States
-            if(states.equals(STATES.MENUE)){
+            if(state.equals(STATES.MENUE)){
                 background.update();
                 background.draw(g);
+                menue.update();
                 menue.draw(g);
                 gameDraw();
             }
-            if(states.equals(STATES.PLAY)){
+            if(state.equals(STATES.PLAY)){
                 gameUpdate();
                 gameRender();
                 gameDraw();
